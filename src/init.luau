@@ -1,5 +1,5 @@
 --[[
-	A module to work with detecting devices in Roblox.
+	A module to work with detecting devices.
 	Programmed by break-core.
 ]]
 
@@ -7,9 +7,11 @@ local GuiService = game:GetService("GuiService")
 local UserInputService = game:GetService("UserInputService")
 
 local qDevice = {}
+local qDeviceExp = {}
 
 local KEY_BUTTON_A = Enum.KeyCode.ButtonA
 local SCREEN_SIZE = workspace.CurrentCamera.ViewportSize
+local QDEV_EXPERIMENTAL = false
 
 --- Get portrait mode by checking if the screen size's X value is bigger than Y
 function qDevice.IsOrientationLandscape(): boolean
@@ -125,7 +127,7 @@ function qDevice.IsPC(): boolean
 end
 
 --- Get if the user is using a controller on PC
-function qDevice.IsControllerOnPC()
+function qDeviceExp.IsControllerOnPC(): boolean
 	if qDevice.IsPC() and UserInputService.GamepadEnabled then
 		return true
 	else
@@ -133,4 +135,9 @@ function qDevice.IsControllerOnPC()
 	end
 end
 
-return qDevice
+--- ENABLE THIS TO TURN ON EXPERIMENTAL FEATURES
+if QDEV_EXPERIMENTAL then
+	return qDevice and qDeviceExp
+else
+	return qDevice
+end
