@@ -1,3 +1,4 @@
+![qDevice logo](/assets/qDevice.png)
 # qDevice
 qDevice is a Roblox Luau package designed to detect platforms of most kinds on Roblox with ease and with a simple interface.
 
