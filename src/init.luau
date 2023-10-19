@@ -33,13 +33,15 @@ function qDevice.IsOrientationPortrait(): boolean
 end
 
 --- Get the user's device orientation
-function qDevice.GetDeviceOrientation(): string
+function qDevice.GetDeviceOrientation(): Enum.ScreenOrientation
 	if qDevice.isOrientationLandscape() then
-		return "Landscape"
+		return Enum.ScreenOrientation.LandscapeLeft 
+			or Enum.ScreenOrientation.LandscapeRight 
+			or Enum.ScreenOrientation.LandscapeSensor
 	elseif qDevice.IsOrientationPortrait() then
-		return "Portrait"
+		return Enum.ScreenOrientation.Portrait
 	else
-		return "None"
+		return
 	end
 end
 
@@ -119,7 +121,7 @@ end
 --- This checks against every platform to ensure we're using PC
 function qDevice.IsPC(): boolean
 	if not (qDevice.IsVR() or qDevice.IsPhone() or qDevice.IsTablet() 
-	or qDevice.IsConsole() or qDevice.IsXbox() or qDevice.IsPlayStation()) then
+		or qDevice.IsConsole() or qDevice.IsXbox() or qDevice.IsPlayStation()) then
 		return true
 	else
 		return false
