@@ -1,6 +1,6 @@
 --[[
 	A module to work with detecting devices.
-	Programmed by break-core. Contributed by VSCPlays
+	Programmed by break-core.
 ]]
 
 local GuiService = game:GetService("GuiService")
