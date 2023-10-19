@@ -118,8 +118,8 @@ end
 
 --- This checks against every platform to ensure we're using PC
 function qDevice.IsPC(): boolean
-	if not qDevice.IsVR() or qDevice.IsPhone() or qDevice.IsTablet() 
-	or qDevice.IsConsole() or qDevice.IsXbox() or qDevice.IsPlayStation() then
+	if not (qDevice.IsVR() or qDevice.IsPhone() or qDevice.IsTablet() 
+	or qDevice.IsConsole() or qDevice.IsXbox() or qDevice.IsPlayStation()) then
 		return true
 	else
 		return false
