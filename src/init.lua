@@ -15,26 +15,17 @@ local QDEV_EXPERIMENTAL = false
 
 --- Get portrait mode by checking if the screen size's X value is bigger than Y
 function qDevice.IsOrientationLandscape(): boolean
-	if UserInputService.TouchEnabled then
-		if SCREEN_SIZE.X > SCREEN_SIZE.Y and UserInputService.TouchEnabled then
-			return true
-		end
-	end
+	return (SCREEN_SIZE.X > SCREEN_SIZE.Y and UserInputService.TouchEnabled)
 end
 
 --- Get portrait mode by checking if the screen size's X value is less than Y
 function qDevice.IsOrientationPortrait(): boolean
-	if UserInputService.TouchEnabled then
-		if SCREEN_SIZE.X < SCREEN_SIZE.Y and UserInputService.TouchEnabled then
-			return true
-		end
-	end
-	return false
+	return (SCREEN_SIZE.X < SCREEN_SIZE.Y and UserInputService.TouchEnabled)
 end
 
 --- Get the user's device orientation
-function qDevice.GetDeviceOrientation(): Enum.ScreenOrientation
-	if qDevice.isOrientationLandscape() then
+function qDevice.GetDeviceOrientation()
+	if qDevice.IsOrientationLandscape() then
 		return Enum.ScreenOrientation.LandscapeLeft 
 			or Enum.ScreenOrientation.LandscapeRight 
 			or Enum.ScreenOrientation.LandscapeSensor
@@ -45,35 +36,25 @@ function qDevice.GetDeviceOrientation(): Enum.ScreenOrientation
 	end
 end
 
+--- Get if the user is on a console by just returning TenFootInterface
+function qDevice.IsConsole(): boolean
+	return GuiService:IsTenFootInterface()
+end
+
 --- Get if the player is on Xbox by utilizing TenFootInterface and KeyCode strings
 function qDevice.IsXbox(): boolean
-	if UserInputService:GetStringForKeyCode(KEY_BUTTON_A) == "ButtonA" and GuiService:IsTenFootInterface() then
-		return true
-	else
-		return false
-	end
+	return (UserInputService:GetStringForKeyCode(KEY_BUTTON_A) == "ButtonA" and qDevice.IsConsole())
 end
 
 --- Exact implementation to IsXbox, but we look for "ButtonCross" to be returned instead
 function qDevice.IsPlayStation(): boolean
-	if UserInputService:GetStringForKeyCode(KEY_BUTTON_A) == "ButtonCross" and GuiService:IsTenFootInterface() then
-		return true
-	else
-		return false
-	end
-end
-
---- Get if the user is on a console by just returning TenFootInterface
-function qDevice.IsConsole(): boolean
-	if GuiService:IsTenFootInterface() then
-		return true
-	else
-		return false
-	end
+	return (UserInputService:GetStringForKeyCode(KEY_BUTTON_A) == "ButtonCross" and qDevice.IsConsole())
 end
 
 --- Hack to get mobile device by comparing hard-coded values against screen size.
-function qDevice.GetMobileDevice(): string
+export type MobileDevice = "Phone" | "Tablet" | "None"
+
+function qDevice.GetMobileDevice(): MobileDevice
 	if qDevice.IsOrientationPortrait() then
 		if SCREEN_SIZE.X < 600 then
 			return "Phone"
@@ -92,54 +73,33 @@ end
 --- Get if the person is using a phone
 function qDevice.IsPhone(): boolean
 	local device = qDevice.GetMobileDevice()
-	if device == "Phone" then
-		return true
-	else
-		return false
-	end
+	return (device == "Phone")
 end
 
 --- Get if the user is using a tablet
 function qDevice.IsTablet(): boolean
 	local device = qDevice.GetMobileDevice()
-	if device == "Tablet" then
-		return true
-	else
-		return false
-	end
+	return (device == "Tablet")
 end
 
 --- Get if the user is using a VR headset
 function qDevice.IsVR(): boolean
-	if UserInputService.VREnabled then
-		return true
-	else
-		return false
-	end
+	return UserInputService.VREnabled
 end
 
 --- This checks against every platform to ensure we're using PC
 function qDevice.IsPC(): boolean
-	if not (qDevice.IsVR() or qDevice.IsPhone() or qDevice.IsTablet() 
-		or qDevice.IsConsole() or qDevice.IsXbox() or qDevice.IsPlayStation()) then
-		return true
-	else
-		return false
-	end
+	return (not (qDevice.IsVR() or qDevice.IsPhone() or qDevice.IsTablet() or qDevice.IsConsole() or qDevice.IsXbox() or qDevice.IsPlayStation()))
 end
 
 --- Get if the user is using a controller on PC
 function qDeviceExp.IsControllerOnPC(): boolean
-	if qDevice.IsPC() and UserInputService.GamepadEnabled then
-		return true
-	else
-		return false
-	end
+	return (qDevice.IsPC() and UserInputService.GamepadEnabled)
 end
 
 --- ENABLE THIS TO TURN ON EXPERIMENTAL FEATURES
 if QDEV_EXPERIMENTAL then
-	return qDevice and qDeviceExp
-else
-	return qDevice
+	qDevice.IsControllerOnPC = qDeviceExp.IsControllerOnPC
 end
+
+return qDevice
