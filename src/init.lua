@@ -51,6 +51,19 @@ function qDevice.IsPlayStation(): boolean
 	return (UserInputService:GetStringForKeyCode(KEY_BUTTON_A) == "ButtonCross" and qDevice.IsConsole())
 end
 
+export type ConsoleDevice = "Xbox" | "PlayStation" | "None"
+-- Return the type of console being used as a string.
+function qDevice.GetConsoleDevice(): ConsoleDevice
+	if qDevice.IsConsole() then 
+		if UserInputService:GetStringForKeyCode(KEY_BUTTON_A) == "ButtonA" then
+			return "Xbox"
+		elseif UserInputService:GetStringForKeyCode(KEY_BUTTON_A) == "ButtonCross" then
+			return "PlayStation"
+		end
+	else
+		return "None" 
+	end
+end	
 --- Hack to get mobile device by comparing hard-coded values against screen size.
 export type MobileDevice = "Phone" | "Tablet" | "None"
 
