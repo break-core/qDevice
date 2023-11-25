@@ -3,7 +3,7 @@
 qDevice is a Roblox Luau package designed to detect platforms of most kinds on Roblox with ease and with a simple interface.
 
 # Reminder
-qDevice uses a lot of UserInputService logic in it that makes it impossible to use on the server. You can only use qDevice on the client. That is the only warning
+qDevice uses a lot of UserInputService logic in it that makes it impossible to use on the server. You can only use qDevice on the client. That is the only warning.
 
 # Documentation:
 
@@ -30,16 +30,16 @@ This returns true or false if the platform is any console, by checking for Ten F
 > [!WARNING]
 > This function is hacky. Like, sorta hacky. It checks if the X or Y values of the screen size are below 600 depending on orientation.
 ### `qDevice.GetMobileDevice(): string`
-This will return a string that says "Phone" or "Tablet" depending on what it finds and for the orientation
+This will return a string that says "Phone" or "Tablet" depending on what it finds and for the orientation.
 
 ### `qDevice.IsPhone(): boolean`
 This function will return true if it finds a phone.
 
 ### `qDevice.IsTablet(): boolean`
-This function will return true if it finds a phone
+This function will return true if it finds a tablet.
 
 ### `qDevice.IsVR(): boolean`
-This returns true if it finds a VR headset active
+This returns true if it finds a VR headset active.
 
 ### `qDevice.IsPC(): boolean`
 This will find if a PC is active by checking against all other devices.
