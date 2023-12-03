@@ -30,12 +30,12 @@ This returns true or false if the platform is any console, by checking for Ten F
 ### `qDevice.GetConsoleDevice(): string`
 This will return a string that says "Xbox" or "Playstation" depending on the console device being used. "None" is returned if there is no console device in use.
 
-> [!WARNING]
-> This function is hacky. Like, sorta hacky. It checks if the X or Y values of the screen size are below 600 depending on orientation.
-> 
-
 ### `qDevice.GetMobileDevice(): string`
 This will return a string that says "Phone" or "Tablet" depending on what it finds and for the orientation. This function returns "None" if a mobile device is not being used.
+
+> [!WARNING]
+> This function is hacky. Like, sorta hacky. It checks if the X or Y values of the screen size are below 600 depending on orientation.
+> Please note that `.IsPhone()` and `.IsTablet()` use `.GetMobileDevice()`, so they have the same limitation of depending on device screen size.
 
 ### `qDevice.IsPhone(): boolean`
 This function will return true if it finds a phone.
